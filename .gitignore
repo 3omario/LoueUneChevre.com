@@ -6,6 +6,7 @@ dist/
 .DS_Store
 coverage/
 *.log
+tmp/
 apps/mobile/.expo/
 apps/mobile/android/
 apps/mobile/ios/
