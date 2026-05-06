@@ -36,13 +36,13 @@ Habitudes observees :
 - corrections directes sur le serveur ;
 - logs expliques dans Slack plutot que dans un runbook.
 
-## Prochaine etape
+## Points a structurer
 
 La nouvelle equipe doit transformer ces pratiques individuelles en process collectif :
 
-- PR obligatoires ;
-- CI visible ;
-- staging fiable ;
+- revue avant integration ;
+- controles automatiques visibles ;
+- environnement de verification fiable ;
 - runbooks versionnes ;
-- metriques DORA ;
-- post-mortems blameless.
+- indicateurs de livraison et d'incident ;
+- retours d'incident exploitables.

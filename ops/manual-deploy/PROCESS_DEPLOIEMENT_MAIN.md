@@ -1,6 +1,6 @@
 # PROCESS DEPLOIEMENT PROD - recopie du carnet de Marc
 
-> Ne pas nettoyer ce fichier avant l'audit. Il sert volontairement de preuve de process manuel fragile.
+> Ancienne procedure conservee pour comprendre les deploiements realises avant la standardisation du process.
 
 ## Quand deployer
 

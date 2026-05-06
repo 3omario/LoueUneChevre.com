@@ -1,6 +1,6 @@
-# Metriques brutes avant audit
+# Metriques brutes de livraison
 
-Ce fichier n'est pas un dashboard. C'est une compilation manuelle pour preparer la reunion avec les nouveaux recrutements.
+Ce fichier n'est pas un dashboard. C'est une compilation manuelle pour preparer la reunion d'exploitation mensuelle.
 
 ## Deployments notes
 

@@ -309,10 +309,10 @@ export default function App() {
             <div className="flex flex-col items-center gap-16 lg:flex-row">
               <div className="lg:w-1/2">
                 <h2 className="mb-6 text-3xl font-bold">Comment fonctionne <span className="text-green-400">LoueUneChevre.com</span> ?</h2>
-                <p className="mb-8 text-lg text-stone-300">Nous gerons l'audit du terrain, les clotures, la livraison du cheptel et le suivi sanitaire pendant l'intervention.</p>
+                <p className="mb-8 text-lg text-stone-300">Nous gerons l'analyse du terrain, les clotures, la livraison du cheptel et le suivi sanitaire pendant l'intervention.</p>
                 <div className="space-y-8">
                   {[
-                    ["Audit de votre terrain", "Surface, vegetation, accessibilite, points d'eau et risque de fuite."],
+                    ["Analyse de votre terrain", "Surface, vegetation, accessibilite, points d'eau et risque de fuite."],
                     ["Installation et livraison", "Pose des clotures mobiles si besoin, livraison des chevres et briefing client."],
                     ["Suivi et recuperation", "Passages reguliers, suivi bien-etre animal et reprise du cheptel en fin de mission."]
                   ].map(([title, text], index) => (
@@ -557,8 +557,8 @@ export default function App() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 font-bold text-white">Legacy</h4>
-            <p className="text-sm">Site maintenu historiquement par une dev et un admin sys. Documentation en cours d'audit.</p>
+            <h4 className="mb-4 font-bold text-white">Contact</h4>
+            <p className="text-sm">Devis, suivi terrain et organisation des interventions d'eco-paturage.</p>
           </div>
         </div>
       </footer>
