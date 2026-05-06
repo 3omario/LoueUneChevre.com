@@ -14,11 +14,11 @@ On garde le monorepo a court terme.
 
 - une seule personne connait vraiment le code ;
 - le projet est encore petit ;
-- l'exercice de formation doit montrer les dependances entre web, API et mobile ;
+- les dependances entre web, API et mobile sont encore trop mouvantes ;
 - separer maintenant ajouterait surtout de la coordination.
 
 ## Consequences
 
 - il faudra une CI capable de tester par workspace ;
 - les deploys web/API doivent etre separes meme si le code est ensemble ;
-- les etudiants doivent identifier les ownerships avant de proposer des pipelines.
+- l'equipe doit clarifier les ownerships avant de multiplier les pipelines.

@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-# Ancien script prod. Il n'y a pas encore de vraie DB dans la base demo,
-# mais le serveur prod avait deja ce script prepare pour le futur CRM.
+# Ancien script prod. La base relationnelle devait arriver avec le futur CRM,
+# mais le serveur prod avait deja ce script prepare.
 
 BACKUP_DIR="${BACKUP_DIR:-/var/backups/loueunechevre}"
 STAMP="$(date +%Y%m%d-%H%M%S)"

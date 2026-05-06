@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 
-// Script lance par cron. Il simule l'ancien export CRM en relisant le CSV legacy.
+// Script lance par cron. Il reproduit l'ancien export CRM en relisant le CSV legacy.
 // TODO: brancher sur une vraie base quand le CRM sera choisi.
 
 const source = path.join(__dirname, "..", "data", "legacy", "devis-janvier-2026.csv");

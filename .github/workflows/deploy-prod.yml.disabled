@@ -1,26 +1,12 @@
-# DESACTIVE.
-# Premiere tentative de pipeline GitHub Actions, jamais activee en prod.
-# Marc preferait garder le deploy manuel tant que le rollback n'etait pas clair.
-
-name: deploy-prod-manual-disabled
-
-on:
-  workflow_dispatch:
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: npm run build:web
-      - name: Copy files to prod
-        run: |
-          echo "TODO: rsync current build"
-          echo "TODO: restart systemd"
-          exit 1
+# DESACTIVE
+#
+# Trace d'une tentative de deploiement automatise abandonnee.
+# Le fichier executable a ete retire avant mise en production : le rollback,
+# les secrets, l'environnement de test et la validation post-deploiement
+# n'etaient pas clairs.
+#
+# Notes restantes de Marc :
+# - ne pas deployer automatiquement tant qu'un retour arriere n'est pas teste ;
+# - ne pas melanger verification, packaging et prod sans etapes lisibles ;
+# - garder une validation humaine tant que la saison haute n'est pas passee ;
+# - documenter ce qui bloque un changement avant merge.

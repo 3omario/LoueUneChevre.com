@@ -39,5 +39,5 @@ Ce fichier vient d'un export Notion incomplet. Les priorites etaient faites au f
 - "Si ca marche, on ne touche pas avant la saison haute."
 - "Le formulaire devis vaut plus que la home page."
 - "Marc connait les serveurs, mais il part souvent en intervention terrain."
-- "Nina veut eviter Kubernetes tant qu'on n'a pas de monitoring."
+- "Nina veut eviter une orchestration trop lourde tant qu'on n'a pas de monitoring."
 - "Le board n'a pas demande la perfection, il demande de livrer sans casser."

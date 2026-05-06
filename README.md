@@ -1,17 +1,17 @@
 # LoueUneChevre.com
 
-Projet support pour le dernier jour de formation DevOps.
+Workspace applicatif LoueUneChevre.com.
 
-Contexte : LoueUneChevre.com loue des chèvres pour l'eco-paturage et la tonte de terrains ruraux. Le projet a longtemps ete maintenu par une seule dev et un seul admin sys. La startup vient de lever 1M EUR et doit maintenant professionnaliser sa livraison logicielle.
+LoueUneChevre.com loue des chevres pour l'eco-paturage et la tonte de terrains ruraux. Le produit a longtemps ete maintenu par une developpeuse et un administrateur systeme. La levee de fonds impose maintenant un fonctionnement plus fiable pour livrer, exploiter et surveiller la plateforme.
 
 ## Apps
 
 - `apps/web` : site React public, devis et landing marketing.
 - `apps/mobile` : prototype mobile Expo pour le suivi terrain.
 - `services/api` : petite API Node.js legacy pour les devis et le healthcheck.
-- `docs` : documentation historique, volontairement incomplete.
+- `docs` : documentation historique et decisions techniques.
 - `ops/manual-deploy` : anciens process de deploiement manuel.
-- `data/legacy` : exports CSV et inventaires metier fictifs.
+- `data/legacy` : exports CSV et inventaires metier.
 - `.github/workflows/deploy-prod.yml.disabled` : tentative de pipeline abandonnee.
 
 ## Quickstart local
@@ -29,19 +29,17 @@ curl http://localhost:3001/health
 curl http://localhost:3001/api/goats
 ```
 
-## Attention
+## Etat actuel
 
-La documentation historique n'est pas fiable a 100%. Elle est gardee pour l'audit DevOps final :
+La documentation historique n'est pas fiable a 100%. Elle doit etre recoupee avec le code, les scripts d'exploitation et l'historique Git :
 
 - process de deploiement manuel ;
 - checklist papier recopiee dans Markdown ;
 - responsabilites floues entre dev et sysadmin ;
-- absence de metriques DORA ;
+- mesures de livraison encore manuelles ;
 - peu de tests.
 
-Le but du projet n'est pas de copier ces pratiques, mais de les auditer puis de proposer une cible DevOps.
-
-## Artefacts utiles pour l'audit final
+## Artefacts utiles
 
 - historique Git local avec seulement deux contributeurs historiques ;
 - journal de deploiements manuel : `ops/manual-deploy/journal-deploiements-2026.md` ;

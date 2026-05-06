@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   AlertTriangle,
   Calendar,
@@ -56,8 +56,71 @@ const goats = [
     speciality: "Terrains escarpes",
     image: "https://images.unsplash.com/photo-1614745107936-e82aab8b91dc?auto=format&fit=crop&w=900&q=80",
     text: "Notre grimpeur officiel, envoye sur les pentes et les fosses ou la tondeuse abandonne."
+  },
+  {
+    name: "Biscotte",
+    breed: "Chevre Poitevine",
+    speciality: "Herbe haute",
+    image: "https://images.unsplash.com/photo-1524024973425-ce04c1ce6e50?auto=format&fit=crop&w=900&q=80",
+    text: "Endurante sur les grands pres et les zones laissees en attente depuis l'automne."
+  },
+  {
+    name: "Rosalie",
+    breed: "Chevre Alpine",
+    speciality: "Sous-bois",
+    image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=900&q=80",
+    text: "A l'aise sous les arbres, avec une preference tres nette pour les jeunes pousses."
+  },
+  {
+    name: "Moka",
+    breed: "Massif Central",
+    speciality: "Terrain humide",
+    image: "https://images.unsplash.com/photo-1533318087102-b415ac5b874d?auto=format&fit=crop&w=900&q=80",
+    text: "Selectionnee pour les interventions en altitude et les parcelles difficiles apres pluie."
   }
 ];
+
+const serviceStats = [
+  ["12", "chevres suivies"],
+  ["7", "departements couverts"],
+  ["38", "tournees depuis janvier"],
+  ["24h", "delai de rappel vise"]
+];
+
+const surfaceOptions = [
+  { value: "900", label: "Moins de 1000 m2" },
+  { value: "2500", label: "1000 - 3000 m2" },
+  { value: "6500", label: "3000 - 10 000 m2" },
+  { value: "14000", label: "Plus de 10 000 m2" }
+];
+
+const terrainOptions = [
+  { value: "herbe_haute", label: "Herbe haute classique", multiplier: 1.05, recommendation: "2 a 3 chevres" },
+  { value: "ronces", label: "Broussailles et ronces", multiplier: 1.35, recommendation: "3 chevres ronces" },
+  { value: "pente", label: "Terrain en pente", multiplier: 1.2, recommendation: "2 chevres du Rove" },
+  { value: "sous_bois", label: "Sous-bois", multiplier: 1.25, recommendation: "2 chevres sous-bois" }
+];
+
+const fenceOptions = [
+  { value: "existante", label: "Cloture existante", fee: 0 },
+  { value: "a_installer", label: "Cloture mobile a installer", fee: 180 }
+];
+
+function estimateBooking(surface, terrainValue, fenceValue) {
+  const numericSurface = Number(surface || 900);
+  const selectedTerrain = terrainOptions.find((terrain) => terrain.value === terrainValue) || terrainOptions[0];
+  const selectedFence = fenceOptions.find((fence) => fence.value === fenceValue) || fenceOptions[0];
+  const goatDays = Math.max(1, Math.ceil(numericSurface / 1200));
+  const logistics = numericSurface > 10000 ? 180 : 0;
+  const amount = Math.round(goatDays * 95 * selectedTerrain.multiplier + selectedFence.fee + logistics);
+
+  return {
+    amount,
+    goatDays,
+    terrain: selectedTerrain,
+    fence: selectedFence
+  };
+}
 
 const reviews = [
   {
@@ -99,6 +162,23 @@ function Brand() {
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("idle");
+  const [booking, setBooking] = useState({
+    name: "",
+    phone: "",
+    location: "",
+    surface: "2500",
+    terrain: "ronces",
+    fence: "a_installer"
+  });
+
+  const quote = useMemo(
+    () => estimateBooking(booking.surface, booking.terrain, booking.fence),
+    [booking.surface, booking.terrain, booking.fence]
+  );
+
+  const updateBooking = (field) => (event) => {
+    setBooking((current) => ({ ...current, [field]: event.target.value }));
+  };
 
   const handleBookingSubmit = (event) => {
     event.preventDefault();
@@ -190,6 +270,14 @@ export default function App() {
                 <a href="#fonctionnement" className="flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition hover:bg-white/20">
                   Decouvrir
                 </a>
+              </div>
+              <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                {serviceStats.map(([value, label]) => (
+                  <div key={label} className="border-l border-green-300/40 pl-4">
+                    <div className="text-2xl font-extrabold text-white">{value}</div>
+                    <div className="text-sm text-green-100">{label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -382,43 +470,62 @@ export default function App() {
                       <CheckCircle2 size={40} />
                     </div>
                     <h3 className="text-2xl font-bold text-stone-900">Demande envoyee !</h3>
-                    <p className="text-stone-600">Notre berger vous recontactera sous 24h.</p>
+                    <p className="text-stone-600">Estimation transmise : {quote.amount.toLocaleString("fr-FR")} EUR. Notre equipe vous recontactera sous 24h.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleBookingSubmit} className="space-y-5">
                     <div className="grid gap-5 md:grid-cols-2">
                       <label className="block text-sm font-medium text-stone-700">
                         Prenom et nom
-                        <input required className="mt-1 w-full rounded-lg border border-stone-300 px-4 py-2.5 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500" placeholder="Jean Dupont" />
+                        <input required value={booking.name} onChange={updateBooking("name")} className="mt-1 w-full rounded-lg border border-stone-300 px-4 py-2.5 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500" placeholder="Jean Dupont" />
                       </label>
                       <label className="block text-sm font-medium text-stone-700">
                         Telephone
-                        <input required type="tel" className="mt-1 w-full rounded-lg border border-stone-300 px-4 py-2.5 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500" placeholder="06 12 34 56 78" />
+                        <input required type="tel" value={booking.phone} onChange={updateBooking("phone")} className="mt-1 w-full rounded-lg border border-stone-300 px-4 py-2.5 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500" placeholder="06 12 34 56 78" />
                       </label>
                     </div>
                     <label className="block text-sm font-medium text-stone-700">
                       Localisation du terrain
-                      <input required className="mt-1 w-full rounded-lg border border-stone-300 px-4 py-2.5 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500" placeholder="Code postal ou ville" />
+                      <input required value={booking.location} onChange={updateBooking("location")} className="mt-1 w-full rounded-lg border border-stone-300 px-4 py-2.5 outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500" placeholder="Code postal ou ville" />
                     </label>
                     <div className="grid gap-5 md:grid-cols-2">
                       <label className="block text-sm font-medium text-stone-700">
                         Surface estimee
-                        <select className="mt-1 w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500">
-                          <option>Moins de 1000 m2</option>
-                          <option>1000 - 3000 m2</option>
-                          <option>3000 - 10 000 m2</option>
-                          <option>Plus de 10 000 m2</option>
+                        <select value={booking.surface} onChange={updateBooking("surface")} className="mt-1 w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500">
+                          {surfaceOptions.map((option) => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                          ))}
                         </select>
                       </label>
                       <label className="block text-sm font-medium text-stone-700">
                         Type de terrain
-                        <select className="mt-1 w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500">
-                          <option>Herbe haute classique</option>
-                          <option>Broussailles et ronces</option>
-                          <option>Terrain en pente</option>
-                          <option>Sous-bois</option>
+                        <select value={booking.terrain} onChange={updateBooking("terrain")} className="mt-1 w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500">
+                          {terrainOptions.map((option) => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                          ))}
                         </select>
                       </label>
+                    </div>
+                    <label className="block text-sm font-medium text-stone-700">
+                      Cloture
+                      <select value={booking.fence} onChange={updateBooking("fence")} className="mt-1 w-full rounded-lg border border-stone-300 bg-white px-4 py-2.5 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500">
+                        {fenceOptions.map((option) => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <div className="rounded-xl border border-green-100 bg-green-50 p-5">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                          <div className="text-sm font-bold uppercase tracking-wide text-green-700">Estimation immediate</div>
+                          <div className="mt-1 text-3xl font-extrabold text-stone-900">{quote.amount.toLocaleString("fr-FR")} EUR</div>
+                        </div>
+                        <div className="text-sm text-stone-700">
+                          <div>{quote.goatDays} jour(s)-chevre prevu(s)</div>
+                          <div>{quote.terrain.recommendation}</div>
+                        </div>
+                      </div>
+                      <p className="mt-3 text-xs text-stone-500">Validation terrain obligatoire avant confirmation de date.</p>
                     </div>
                     <button type="submit" className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-stone-900 py-3.5 font-bold text-white transition hover:bg-stone-800">
                       Recevoir mon devis gratuit

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "LEGACY DEPLOY SCRIPT - use only for the audit demo"
+echo "LEGACY DEPLOY SCRIPT - production manual path"
 echo "Target: ${MANUAL_DEPLOY_TARGET:-prod-web-01}"
 echo "This script intentionally documents the old manual process."
 

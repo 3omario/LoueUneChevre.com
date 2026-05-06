@@ -26,6 +26,6 @@ Ce fichier n'est pas un dashboard. C'est une compilation manuelle pour preparer 
 - besoin produit avec coordination terrain : 1 a 2 semaines ;
 - mobile : impossible a estimer, depend de Nina et de son Mac.
 
-## Attention formateur
+## Limites connues
 
-Ces nombres sont volontairement approximatifs. Les etudiants doivent discuter des proxies, des biais et de ce qu'il faudrait instrumenter.
+Ces nombres viennent de notes manuelles et de souvenirs d'exploitation. Ils doivent etre recoupes avec les commits, les tags, les incidents et le journal de deploiement avant d'en faire des indicateurs de pilotage.
